@@ -25,6 +25,10 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogDebug("debug test");
+            _logger.LogTrace("trace test");
+            _logger.LogInformation("info test");
+          
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
