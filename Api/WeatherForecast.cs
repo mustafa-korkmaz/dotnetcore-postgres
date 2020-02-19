@@ -1,6 +1,6 @@
 using System;
 
-namespace boilerplate_dotnet_core_mysql
+namespace BoilerplateDotnetCorePostgres
 {
     public class WeatherForecast
     {

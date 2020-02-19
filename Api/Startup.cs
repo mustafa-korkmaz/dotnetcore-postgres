@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace boilerplate_dotnet_core_mysql
+namespace BoilerplateDotnetCorePostgres
 {
     public class Startup
     {

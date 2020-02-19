@@ -5,9 +5,8 @@ using Common;
 using Common.Response;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.ViewModels.Blog;
-using WebApi.ViewModels.Post;
 
-namespace boilerplate_dotnet_core_mysql.Controllers
+namespace BoilerplateDotnetCorePostgres.Controllers
 {
     [Route("[controller]")]
     [ApiController]

@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dal.Models.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Dal.Blog
@@ -14,7 +13,6 @@ namespace Dal.Blog
     {
         public BlogDbContext(DbContextOptions options) : base(options)
         {
-            //todo: add query execution logging
         }
 
         public DbSet<Models.Blog> Blogs { get; set; }
@@ -218,14 +216,6 @@ namespace Dal.Blog
             }
 
             return base.SaveChangesAsync(cancellationToken);
-        }
-        private static void LogQuery(string sql)
-        {
-            // This text is always added, making the file longer over time  if it is not deleted.
-            using (StreamWriter sw = File.AppendText(@"C:\\logs\\BlogDbQueryLogs.sql"))
-            {
-                sw.WriteLine(sql);
-            }
         }
     }
 }
