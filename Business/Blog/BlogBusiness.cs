@@ -45,7 +45,7 @@ namespace Business.Blog
         /// </summary>
         /// <returns></returns>
         [CacheableResult(CacheKey = "GetAllBlogs")]
-        public IEnumerable<Dto.Blog> GetFromCache()
+        public IEnumerable<Dto.Blog> GetAll()
         {
             var blogs = _repository.GetAll();
 

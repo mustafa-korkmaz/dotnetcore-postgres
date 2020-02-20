@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Service.Caching;
 
 namespace BoilerplateDotnetCorePostgres
 {
@@ -55,6 +56,8 @@ namespace BoilerplateDotnetCorePostgres
             services.AddTransient<IBlogBusiness, BlogBusiness>();
             services.AddTransient<IPostBusiness, PostBusiness>();
 
+            services.AddTransient<ICacheService, CacheService>();
+
             services.AddAutoMapper(typeof(Startup));
 
             //todo: configure cors properly
@@ -85,7 +88,7 @@ namespace BoilerplateDotnetCorePostgres
             {
                 app.UseDeveloperExceptionPage();
             }
-       
+
             app.Use(async (context, next) =>
             {
                 context.Request.EnableBuffering();
