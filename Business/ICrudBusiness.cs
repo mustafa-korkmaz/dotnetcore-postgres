@@ -27,7 +27,7 @@ namespace Business
         /// </summary>
         /// <param name="dto"></param>
         /// <returns>affected row count in db</returns>
-        BusinessResponse<int> Edit(TDto dto);
+        DataResponse<int> Edit(TDto dto);
 
         /// <summary>
         /// hard deletes the given entity.
@@ -51,11 +51,11 @@ namespace Business
         /// returns dto object by given id
         /// </summary>
         /// <param name="id"></param>
-        BusinessResponse<TDto> Get(int id);
+        DataResponse<TDto> Get(int id);
 
         /// <summary>
         /// returns all dto objects
         /// </summary>
-        BusinessResponse<IEnumerable<TDto>> GetAll();
+        DataResponse<IEnumerable<TDto>> GetAll();
     }
 }

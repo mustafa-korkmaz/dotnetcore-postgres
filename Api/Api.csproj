@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>boilerplate_dotnet_core_mysql</RootNamespace>
+    <RootNamespace>BoilerplateDotnetCorePostgres</RootNamespace>
     <UserSecretsId>73998eb1-5c6e-42c1-955a-d267ec2550d7</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
@@ -12,6 +12,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0-preview1.19506.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\Dal\Dal.csproj" />
+    <ProjectReference Include="..\Security\Security.csproj" />
   </ItemGroup>
 
 

@@ -61,18 +61,18 @@ namespace Business
             Uow.Save();
         }
 
-        public virtual BusinessResponse<int> Edit(TDto dto)
+        public virtual DataResponse<int> Edit(TDto dto)
         {
-            var businessResp = new BusinessResponse<int>
+            var businessResp = new DataResponse<int>
             {
-                ResponseCode = ResponseCode.Fail
+                Type = ResponseType.Fail
             };
 
             var entity = Repository.GetById(dto.Id);
 
             if (entity == null)
             {
-                businessResp.ResponseMessage = ErrorMessage.RecordNotFound;
+                businessResp.Code = ErrorMessage.RecordNotFound;
                 return businessResp;
             }
 
@@ -95,7 +95,7 @@ namespace Business
 
                     if (!entityUserId.Equals(dtoUserId))
                     {
-                        businessResp.ResponseMessage = ErrorMessage.NotAuthorized;
+                        businessResp.Code = ErrorMessage.NotAuthorized;
                         return businessResp;
                     }
                 }
@@ -118,8 +118,8 @@ namespace Business
 
             var affectedRows = Uow.Save();
 
-            businessResp.ResponseData = affectedRows;
-            businessResp.ResponseCode = ResponseCode.Success;
+            businessResp.Data = affectedRows;
+            businessResp.Type = ResponseType.Success;
             return businessResp;
         }
 
@@ -187,48 +187,48 @@ namespace Business
         }
 
 
-        public virtual BusinessResponse<TDto> Get(int id)
+        public virtual DataResponse<TDto> Get(int id)
         {
-            var businessResp = new BusinessResponse<TDto>
+            var businessResp = new DataResponse<TDto>
             {
-                ResponseCode = ResponseCode.Fail
+                Type = ResponseType.Fail
             };
 
             var entity = Repository.GetById(id);
 
             if (entity == null)
             {
-                businessResp.ResponseMessage = ErrorMessage.RecordNotFound;
+                businessResp.Code = ErrorMessage.RecordNotFound;
                 return businessResp;
             }
 
             var dto = Mapper.Map<TEntity, TDto>(entity);
 
-            businessResp.ResponseCode = ResponseCode.Success;
-            businessResp.ResponseData = dto;
+            businessResp.Type = ResponseType.Success;
+            businessResp.Data = dto;
 
             return businessResp;
         }
 
-        public virtual BusinessResponse<IEnumerable<TDto>> GetAll()
+        public virtual DataResponse<IEnumerable<TDto>> GetAll()
         {
-            var businessResp = new BusinessResponse<IEnumerable<TDto>>
+            var businessResp = new DataResponse<IEnumerable<TDto>>
             {
-                ResponseCode = ResponseCode.Fail
+                Type = ResponseType.Fail
             };
 
             var entities = Repository.GetAll();
 
             if (!entities.Any())
             {
-                businessResp.ResponseMessage = ErrorMessage.RecordNotFound;
+                businessResp.Code = ErrorMessage.RecordNotFound;
                 return businessResp;
             }
 
             var dtos = Mapper.Map<IEnumerable<TEntity>, IEnumerable<TDto>>(entities);
 
-            businessResp.ResponseCode = ResponseCode.Success;
-            businessResp.ResponseData = dtos;
+            businessResp.Type = ResponseType.Success;
+            businessResp.Data = dtos;
 
             return businessResp;
         }

@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dto", "Dto\Dto.csproj", "{B2AC6F75-E715-437F-8C16-E95CB58B12DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{3BB1B526-EE91-44A8-8C13-FDEF60EE7A8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{3BB1B526-EE91-44A8-8C13-FDEF60EE7A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5F3FD114-CA89-427F-95DD-BA194CDD0D69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{5F3FD114-CA89-427F-95DD-BA194CDD0D69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{D80801B0-731E-4025-A7CD-D583B64F2AE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{5F3FD114-CA89-427F-95DD-BA194CDD0D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3FD114-CA89-427F-95DD-BA194CDD0D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3FD114-CA89-427F-95DD-BA194CDD0D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D80801B0-731E-4025-A7CD-D583B64F2AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80801B0-731E-4025-A7CD-D583B64F2AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80801B0-731E-4025-A7CD-D583B64F2AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80801B0-731E-4025-A7CD-D583B64F2AE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

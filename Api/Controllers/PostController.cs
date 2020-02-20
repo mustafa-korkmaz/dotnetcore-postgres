@@ -24,9 +24,9 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         {
             var resp = GetPosts();
 
-            if (resp.ResponseCode != ResponseCode.Success)
+            if (resp.Type != ResponseType.Success)
             {
-                return BadRequest(resp.ResponseMessage);
+                return BadRequest(resp.Code);
             }
 
             return Ok(resp);
@@ -36,18 +36,18 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         {
             var apiResp = new ApiResponse<IEnumerable<PostViewModel>>
             {
-                ResponseCode = ResponseCode.Fail
+                Type = ResponseType.Fail
             };
 
             var resp = _postBusiness.SearchPosts("search text");
 
-            apiResp.ResponseData = resp.Select(p => new PostViewModel
+            apiResp.Data = resp.Select(p => new PostViewModel
             {
                 Id = p.Id,
                 Title = p.Title
             });
 
-            apiResp.ResponseCode = ResponseCode.Success;
+            apiResp.Type = ResponseType.Success;
             return apiResp;
         }
 

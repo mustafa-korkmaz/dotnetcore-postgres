@@ -25,9 +25,9 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         {
             var resp = GetBlogs();
 
-            if (resp.ResponseCode != ResponseCode.Success)
+            if (resp.Type != ResponseType.Success)
             {
-                return BadRequest(resp.ResponseMessage);
+                return BadRequest(resp.Code);
             }
 
             return Ok(resp);
@@ -37,18 +37,18 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         {
             var apiResp = new ApiResponse<IEnumerable<BlogViewModel>>
             {
-                ResponseCode = ResponseCode.Fail
+                Type = ResponseType.Fail
             };
 
             var resp = _blogBusiness.SearchBlogs("google.com");
 
-            apiResp.ResponseData = resp.Select(p => new BlogViewModel
+            apiResp.Data = resp.Select(p => new BlogViewModel
             {
                 Id = p.Id,
                 Url = p.Url
             });
 
-            apiResp.ResponseCode = ResponseCode.Success;
+            apiResp.Type = ResponseType.Success;
             return apiResp;
         }
 

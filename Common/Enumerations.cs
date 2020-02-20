@@ -66,7 +66,7 @@
         Video
     }
 
-    public enum ResponseCode
+    public enum ResponseType
     {
         Fail = -1,
         Success = 0,

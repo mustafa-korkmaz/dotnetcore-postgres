@@ -4,8 +4,9 @@ namespace Common.Response
     /// <summary>
     /// abstract response  base class
     /// </summary>
-    public abstract class BaseResponse
+    public class ResponseBase
     {
-        public string ResponseMessage { get; set; }
+        public string Code { get; set; }
+        public ResponseType Type { get; set; }
     }
 }

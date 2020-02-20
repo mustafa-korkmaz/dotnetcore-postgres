@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Common;
 using Dal.Blog;
 using Dal.Repositories.Blog;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,7 @@ namespace Business.Blog
         /// max time cached blog list
         /// </summary>
         /// <returns></returns>
-        [CacheableResult(CacheKey = "GetAllBlogs")]
+        [CacheableResult(CacheKey = CacheKey.GetAllBlogs)]
         public IEnumerable<Dto.Blog> GetAll()
         {
             var blogs = _repository.GetAll();
