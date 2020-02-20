@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace BoilerplateDotnetCorePostgres
 {
@@ -26,7 +27,14 @@ namespace BoilerplateDotnetCorePostgres
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                };
+            });
 
             //Injecting the db context
             services.AddDbContext<Dal.Blog.BlogDbContext>(options =>
@@ -44,7 +52,7 @@ namespace BoilerplateDotnetCorePostgres
 
             services.AddTransient<IBlogBusiness, BlogBusiness>();
             services.AddTransient<IPostBusiness, PostBusiness>();
-       
+
             services.AddAutoMapper(typeof(Startup));
 
             //todo: configure cors properly
