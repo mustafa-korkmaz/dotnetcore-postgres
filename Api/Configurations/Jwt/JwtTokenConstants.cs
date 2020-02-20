@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BoilerplateDotnetCorePostgres.Configuration.Jwt
+namespace BoilerplateDotnetCorePostgres.Configurations.Jwt
 {
     public class JwtTokenConstants
     {

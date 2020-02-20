@@ -1,11 +1,13 @@
 using AutoMapper;
-using BoilerplateDotnetCorePostgres.Configuration.Jwt;
+using BoilerplateDotnetCorePostgres.Configurations.Jwt;
+using BoilerplateDotnetCorePostgres.Middlewares;
 using Business.Blog;
 using Business.Post;
 using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,6 +85,12 @@ namespace BoilerplateDotnetCorePostgres
             {
                 app.UseDeveloperExceptionPage();
             }
+       
+            app.Use(async (context, next) =>
+            {
+                context.Request.EnableBuffering();
+                await next();
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -95,6 +103,9 @@ namespace BoilerplateDotnetCorePostgres
             });
 
             //app.UseHttpsRedirection();
+
+            //request handling
+            app.UseRequestMiddleware();
 
             app.UseRouting();
             app.UseCors("policy");

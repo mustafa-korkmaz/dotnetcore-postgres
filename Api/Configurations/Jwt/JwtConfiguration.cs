@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 
-namespace BoilerplateDotnetCorePostgres.Configuration.Jwt
+namespace BoilerplateDotnetCorePostgres.Configurations.Jwt
 {
     public static class JwtConfiguration
     {
