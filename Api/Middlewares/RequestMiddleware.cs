@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace BoilerplateDotnetCorePostgres.Middlewares
@@ -12,37 +13,52 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<RequestMiddleware> _logger;
+        private readonly IConfiguration _configuration;
+
         // Must have constructor with this signature, otherwise exception at run time
-        public RequestMiddleware(RequestDelegate next, ILogger<RequestMiddleware> logger)
+        public RequestMiddleware(RequestDelegate next, ILogger<RequestMiddleware> logger, IConfiguration configuration)
         {
             // This is an HTTP Handler, so no need to store next
             _next = next;
 
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task Invoke(HttpContext context)
         {
             bool hasError = false;
+            bool logRequestContent = false;
 
             string requestContent = string.Empty;
-            var ip = context.Request.HttpContext.Connection.RemoteIpAddress;
+            var ip = string.Empty;
 
             Stream originalBody = context.Response.Body;
 
             try
             {
-                var sr = new StreamReader(context.Request.Body);
+                //get we really need to log request content or not from appSettings
+                var setting = _configuration["Logging:LogRequestContent"];
+               
+                logRequestContent = setting != null && setting.ToLower() == "true";
 
-                var request = context.Request.Body;
+                if (logRequestContent)
+                {
+                    var address = context.Request.HttpContext.Connection.RemoteIpAddress;
+                    ip = address?.ToString();
 
-                var result = new byte[request.Length];
+                    var sr = new StreamReader(context.Request.Body);
 
-                await request.ReadAsync(result, 0, (int)request.Length);
+                    var request = context.Request.Body;
 
-                requestContent = System.Text.Encoding.ASCII.GetString(result);
+                    var result = new byte[request.Length];
 
-                context.Request.Body.Position = 0;
+                    await request.ReadAsync(result, 0, (int)request.Length);
+
+                    requestContent = System.Text.Encoding.ASCII.GetString(result);
+
+                    context.Request.Body.Position = 0;
+                }
 
                 await _next(context);
             }
@@ -63,7 +79,10 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
                     context.Response.Body = originalBody;
                 }
 
-                ProcessMessageAsync(context.Response.StatusCode, requestContent, ip?.ToString());
+                if (logRequestContent)
+                {
+                    ProcessMessageAsync(context.Response.StatusCode, requestContent, ip);
+                }
             }
         }
 
