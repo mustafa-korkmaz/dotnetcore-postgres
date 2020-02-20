@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using Dal;
 using Dal.Blog;
 using Dal.Repositories.Blog;
 using Microsoft.Extensions.Logging;
-//using Services.Logging;
+using Service.Caching;
 
 namespace Business.Blog
 {
@@ -39,6 +38,20 @@ namespace Business.Blog
             var dto = _mapper.Map<Dal.Models.Blog, Dto.Blog>(blog);
 
             return dto;
+        }
+
+        /// <summary>
+        /// max time cached blog list
+        /// </summary>
+        /// <returns></returns>
+        [CacheableResult(CacheKey = "GetAllBlogs")]
+        public IEnumerable<Dto.Blog> GetFromCache()
+        {
+            var blogs = _repository.GetAll();
+
+            var dtos = _mapper.Map<IEnumerable<Dal.Models.Blog>, IEnumerable<Dto.Blog>>(blogs);
+
+            return dtos;
         }
     }
 }
