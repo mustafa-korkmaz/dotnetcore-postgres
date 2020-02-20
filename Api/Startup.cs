@@ -1,8 +1,10 @@
 using AutoMapper;
+using BoilerplateDotnetCorePostgres.Configuration.Jwt;
 using Business.Blog;
 using Business.Post;
 using Common;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +47,19 @@ namespace BoilerplateDotnetCorePostgres
        
             services.AddAutoMapper(typeof(Startup));
 
+            //todo: configure cors properly
+            services.AddCors(config =>
+            {
+                var policy = new CorsPolicy();
+                policy.Headers.Add("*");
+                policy.Methods.Add("*");
+                policy.Origins.Add("*");
+                policy.SupportsCredentials = true;
+                config.AddPolicy("policy", policy);
+            });
+
+            services.ConfigureJwtAuthentication();
+            services.ConfigureJwtAuthorization();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -74,6 +89,7 @@ namespace BoilerplateDotnetCorePostgres
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("policy");
 
             app.UseAuthentication();
             app.UseAuthorization();
