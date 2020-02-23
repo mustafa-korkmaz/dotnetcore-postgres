@@ -12,12 +12,12 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "boilerplate_dotnet_core_mysql": {
+    "boilerplate_dotnet_core_postgres": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

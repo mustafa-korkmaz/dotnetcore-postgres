@@ -31,5 +31,9 @@
     <ProjectReference Include="..\Security\Security.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 
 </Project>

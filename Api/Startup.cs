@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Security;
 using Service.Caching;
 
 namespace BoilerplateDotnetCorePostgres
@@ -55,6 +56,7 @@ namespace BoilerplateDotnetCorePostgres
 
             services.AddTransient<IBlogBusiness, BlogBusiness>();
             services.AddTransient<IPostBusiness, PostBusiness>();
+            services.AddTransient<ISecurity, JwtSecurity>();
 
             services.AddTransient<ICacheService, CacheService>();
 
@@ -67,7 +69,7 @@ namespace BoilerplateDotnetCorePostgres
                 policy.Headers.Add("*");
                 policy.Methods.Add("*");
                 policy.Origins.Add("*");
-                policy.SupportsCredentials = true;
+                //policy.SupportsCredentials = true;
                 config.AddPolicy("policy", policy);
             });
 
@@ -77,7 +79,11 @@ namespace BoilerplateDotnetCorePostgres
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "My API",
+                    Version = "v1"
+                });
             });
         }
 

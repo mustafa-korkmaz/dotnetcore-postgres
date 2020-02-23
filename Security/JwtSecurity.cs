@@ -14,15 +14,15 @@ using AutoMapper;
 using ApplicationUser = Dto.User.ApplicationUser;
 using Microsoft.Extensions.Logging;
 
-namespace Security.Jwt
+namespace Security
 {
-    public class Security : ISecurity
+    public class JwtSecurity : ISecurity
     {
         private readonly UserManager<Dal.Models.Identity.ApplicationUser> _userManager;
-        private readonly ILogger<Security> _logger;
+        private readonly ILogger<JwtSecurity> _logger;
         private readonly IMapper _mapper;
 
-        public Security(UserManager<Dal.Models.Identity.ApplicationUser> userManager, ILogger<Security> logger, IMapper mapper)
+        public JwtSecurity(UserManager<Dal.Models.Identity.ApplicationUser> userManager, ILogger<JwtSecurity> logger, IMapper mapper)
         {
             _userManager = userManager;
             _logger = logger;
