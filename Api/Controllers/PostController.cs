@@ -26,7 +26,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
 
             if (resp.Type != ResponseType.Success)
             {
-                return BadRequest(resp.Code);
+                return BadRequest(resp.ErrorCode);
             }
 
             return Ok(resp);

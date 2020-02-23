@@ -6,7 +6,7 @@ namespace Common.Response
     /// </summary>
     public class ResponseBase
     {
-        public string Code { get; set; }
+        public string ErrorCode { get; set; }
         public ResponseType Type { get; set; }
     }
 }

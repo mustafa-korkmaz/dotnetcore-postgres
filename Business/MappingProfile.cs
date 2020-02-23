@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Business
 {
     public class MappingProfile : AutoMapper.Profile
@@ -12,9 +14,13 @@ namespace Business
 
             CreateMap<Dto.Post, Dal.Models.Post>();
             CreateMap<Dal.Models.Post, Dto.Post>();
+            //CreateMap<IEnumerable<Dto.Post>, IEnumerable<Dal.Models.Post>>();
+            //CreateMap<IEnumerable<Dal.Models.Post>, IEnumerable<Dto.Post>>();
 
             CreateMap<Dto.Blog, Dal.Models.Blog>();
             CreateMap<Dal.Models.Blog, Dto.Blog>();
+            //CreateMap<IEnumerable<Dto.Blog>, IEnumerable<Dal.Models.Blog>>();
+            //CreateMap<IEnumerable<Dal.Models.Blog>, IEnumerable<Dto.Blog>>();
         }
     }
 }

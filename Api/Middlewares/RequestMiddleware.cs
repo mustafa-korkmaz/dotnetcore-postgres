@@ -39,25 +39,20 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
             {
                 //get we really need to log request content or not from appSettings
                 var setting = _configuration["Logging:LogRequestContent"];
-               
+
                 logRequestContent = setting != null && setting.ToLower() == "true";
 
                 if (logRequestContent)
                 {
                     var address = context.Request.HttpContext.Connection.RemoteIpAddress;
+
                     ip = address?.ToString();
 
-                    var sr = new StreamReader(context.Request.Body);
+                    var request = context.Request;
 
-                    var request = context.Request.Body;
-
-                    var result = new byte[request.Length];
-
-                    await request.ReadAsync(result, 0, (int)request.Length);
-
-                    requestContent = System.Text.Encoding.ASCII.GetString(result);
-
-                    context.Request.Body.Position = 0;
+                    requestContent = await new StreamReader(request.Body).ReadToEndAsync();
+                    
+                    request.Body.Seek(0, SeekOrigin.Begin);
                 }
 
                 await _next(context);
@@ -67,7 +62,7 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
                 hasError = true;
                 context.Response.Clear();
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync(ErrorMessage.ApplicationExceptionMessage);
+                await context.Response.WriteAsync(ErrorCode.ApplicationExceptionMessage);
 
                 //log service exc
                 _logger.LogError(exc, "Unhandled error", null);

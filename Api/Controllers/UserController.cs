@@ -23,16 +23,11 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         [HttpPost("token")]
         public async Task<IActionResult> GetToken([FromBody]TokenModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(GetModelStateErrors(ModelState));
-            }
-
             var resp = await GetTokenResponse(model);
 
             if (resp.Type != ResponseType.Success)
             {
-                return BadRequest(resp.Code);
+                return BadRequest(resp);
             }
 
             return Ok(resp);
@@ -56,7 +51,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
 
             if (securityResp.Type != ResponseType.Success)
             {
-                apiResp.Code = securityResp.Code;
+                apiResp.ErrorCode = securityResp.ErrorCode;
                 return apiResp;
             }
 

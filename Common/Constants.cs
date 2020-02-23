@@ -11,18 +11,18 @@ namespace Common
         public static string ApiKeyHash = Utility.GetHashValue(ApiKeyValue);
     }
 
-    public static class ErrorMessage
+    public static class ErrorCode
     {
-        public const string ApplicationExceptionMessage = "An unexpected error occured.\nPlease try again later.";
-        public const string RecordNotFound = "Record not found.";
-        public const string NotAuthorized = "You are not authorized to perform the operation.";
-        public const string ApiKeyNotFound = "Api key not found.";
-        public const string ChannelTypeNotFound = "Channel type key not found.";
-        public const string ApiKeyIncorrect = "Given api key is incorrect.";
-        public const string UserNotFound = "User not found.";
-        public const string UserNotActive = "Kullanıcı durumu aktif değil.";
-        public const string IncorrectusernameOrPassword = "IncorrectusernameOrPassword";
-        public const string UserExists = "UserExists";
+        public const string ApplicationExceptionMessage = "UNEXPECTED_ERROR";
+        public const string RecordNotFound = "RECORD_NOT_FOUND";
+        public const string NotAuthorized = "NOT_AUTHORIZED";
+        public const string ApiKeyNotFound = "API_KEY_NOT_FOUND";
+        public const string ChannelTypeNotFound = "CHANNEL_TYPE_NOT_FOUND";
+        public const string ApiKeyIncorrect = "API_KEY_NOT_INCORRECT";
+        public const string UserNotFound = "USER_NOT_FOUND";
+        public const string UserNotActive = "USER_NOT_ACTIVE";
+        public const string IncorrectUsernameOrPassword = "USERNAME_OR_PASSWORD_INCORRECT";
+        public const string UserExists = "USER_ALREADY_EXISTS";
     }
 
     public static class LoggingOperationPhrase

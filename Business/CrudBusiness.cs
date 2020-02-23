@@ -72,7 +72,7 @@ namespace Business
 
             if (entity == null)
             {
-                businessResp.Code = ErrorMessage.RecordNotFound;
+                businessResp.ErrorCode = ErrorCode.RecordNotFound;
                 return businessResp;
             }
 
@@ -95,7 +95,7 @@ namespace Business
 
                     if (!entityUserId.Equals(dtoUserId))
                     {
-                        businessResp.Code = ErrorMessage.NotAuthorized;
+                        businessResp.ErrorCode = ErrorCode.NotAuthorized;
                         return businessResp;
                     }
                 }
@@ -198,7 +198,7 @@ namespace Business
 
             if (entity == null)
             {
-                businessResp.Code = ErrorMessage.RecordNotFound;
+                businessResp.ErrorCode = ErrorCode.RecordNotFound;
                 return businessResp;
             }
 
@@ -221,7 +221,7 @@ namespace Business
 
             if (!entities.Any())
             {
-                businessResp.Code = ErrorMessage.RecordNotFound;
+                businessResp.ErrorCode = ErrorCode.RecordNotFound;
                 return businessResp;
             }
 

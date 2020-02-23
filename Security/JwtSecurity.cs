@@ -49,7 +49,7 @@ namespace Security
 
             if (user == null)
             {
-                resp.Code = ErrorMessage.UserNotFound;
+                resp.ErrorCode = ErrorCode.UserNotFound;
                 resp.Type = ResponseType.RecordNotFound;
                 return resp;
             }
@@ -58,7 +58,7 @@ namespace Security
 
             if (!isPasswordValid)
             {
-                resp.Code = ErrorMessage.IncorrectusernameOrPassword;
+                resp.ErrorCode = ErrorCode.IncorrectUsernameOrPassword;
                 return resp;
             }
 
@@ -90,7 +90,7 @@ namespace Security
 
             if (userByName != null)
             {
-                resp.Code = ErrorMessage.UserExists;
+                resp.ErrorCode = ErrorCode.UserExists;
                 return resp;
             }
 
@@ -98,7 +98,7 @@ namespace Security
 
             if (userByEmail != null)
             {
-                resp.Code = ErrorMessage.UserExists;
+                resp.ErrorCode = ErrorCode.UserExists;
                 return resp;
             }
 
@@ -121,7 +121,7 @@ namespace Security
             if (userDto.Id == null)
             {
                 //not expected
-                resp.Code = ErrorMessage.ApplicationExceptionMessage;
+                resp.ErrorCode = ErrorCode.ApplicationExceptionMessage;
                 _logger.LogError(string.Format("New user {0} cannot be registered.", userDto.Email));
 
                 return resp;
@@ -146,7 +146,7 @@ namespace Security
 
             if (user == null)
             {
-                resp.Code = ErrorMessage.UserNotFound;
+                resp.ErrorCode = ErrorCode.UserNotFound;
                 return resp;
             }
 
@@ -174,7 +174,7 @@ namespace Security
 
             if (user == null)
             {
-                resp.Code = ErrorMessage.UserNotFound;
+                resp.ErrorCode = ErrorCode.UserNotFound;
                 resp.Type = ResponseType.RecordNotFound;
 
                 return resp;
