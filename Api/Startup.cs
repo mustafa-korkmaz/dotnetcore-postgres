@@ -1,6 +1,7 @@
 using AutoMapper;
 using BoilerplateDotnetCorePostgres.Configurations.Jwt;
 using BoilerplateDotnetCorePostgres.Middlewares;
+using Business;
 using Business.Blog;
 using Business.Post;
 using Common;
@@ -60,7 +61,7 @@ namespace BoilerplateDotnetCorePostgres
 
             services.AddTransient<ICacheService, CacheService>();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(MappingProfile));
 
             //todo: configure cors properly
             services.AddCors(config =>
