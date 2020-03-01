@@ -13,7 +13,7 @@ namespace Common
 
     public static class ErrorCode
     {
-        public const string ApplicationExceptionMessage = "UNEXPECTED_ERROR";
+        public const string ApplicationException = "UNEXPECTED_ERROR";
         public const string RecordNotFound = "RECORD_NOT_FOUND";
         public const string NotAuthorized = "NOT_AUTHORIZED";
         public const string ApiKeyNotFound = "API_KEY_NOT_FOUND";
@@ -23,6 +23,17 @@ namespace Common
         public const string UserNotActive = "USER_NOT_ACTIVE";
         public const string IncorrectUsernameOrPassword = "USERNAME_OR_PASSWORD_INCORRECT";
         public const string UserExists = "USER_ALREADY_EXISTS";
+    }
+
+    public static class ValidationErrorCode
+    {
+        public const string RequiredField = "{0}_IS_REQUIRED";
+
+        public const string MaxLength = "{0}_FIELD_CAN_BE_MAX_{1}_CHARS";
+
+        public const string BetweenLength = "{0}_FIELD_CAN_BE_MIN_{2}_MAX_{1}_CHARS";
+
+        public const string EmailNotValid = "EMAIL_NOT_VALID";
     }
 
     public static class LoggingOperationPhrase

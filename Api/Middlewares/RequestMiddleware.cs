@@ -2,10 +2,12 @@
 using System.IO;
 using System.Threading.Tasks;
 using Common;
+using Common.Response;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace BoilerplateDotnetCorePostgres.Middlewares
 {
@@ -51,7 +53,7 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
                     var request = context.Request;
 
                     requestContent = await new StreamReader(request.Body).ReadToEndAsync();
-                    
+
                     request.Body.Seek(0, SeekOrigin.Begin);
                 }
 
@@ -62,7 +64,17 @@ namespace BoilerplateDotnetCorePostgres.Middlewares
                 hasError = true;
                 context.Response.Clear();
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync(ErrorCode.ApplicationExceptionMessage);
+                context.Response.ContentType = "application/json; charset=utf-8";
+
+                //set application exception return obj
+                JObject o = JObject.FromObject(new
+                {
+                    type_text = ResponseType.InternalError.ToString(),
+                    error_code = ErrorCode.ApplicationException,
+                    type = ResponseType.InternalError
+                });
+
+                await context.Response.WriteAsync(o.ToString());
 
                 //log service exc
                 _logger.LogError(exc, "Unhandled error", null);

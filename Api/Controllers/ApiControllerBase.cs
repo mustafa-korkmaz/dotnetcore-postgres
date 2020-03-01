@@ -3,33 +3,41 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
 using System.Security.Claims;
 using Common;
+using Common.Response;
 
 namespace BoilerplateDotnetCorePostgres.Controllers
 {
     public class ApiControllerBase : ControllerBase
     {
         /// <summary>
-        /// return model state errors as a sentence.
+        /// return model state error response
         /// </summary>
         /// <param name="dic"></param>
         /// <returns></returns>
-        protected string GetModelStateErrors(ModelStateDictionary dic)
+        protected ApiResponse GetModelStateErrorResponse(ModelStateDictionary dic)
         {
-            var list = dic.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
+            //var list = dic.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
 
-            string result = string.Empty;
+            //string result = string.Empty;
 
-            for (int i = 1; i <= list.Count(); i++)
+            //for (int i = 1; i <= list.Count(); i++)
+            //{
+            //    result += list[i - 1];
+
+            //    if (i < list.Count())
+            //    {
+            //        result += " ";
+            //    }
+            //}
+
+            //we will return first validation error as error code
+            var firstError = dic.Values.First().Errors.First().ErrorMessage;
+
+            return new ApiResponse
             {
-                result += list[i - 1];
-
-                if (i < list.Count())
-                {
-                    result += " ";
-                }
-            }
-
-            return result.Trim();
+                Type = ResponseType.ValidationError,
+                ErrorCode = firstError
+            };
         }
 
         /// <summary>

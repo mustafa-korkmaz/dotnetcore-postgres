@@ -27,6 +27,11 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetToken([FromBody]TokenModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(GetModelStateErrorResponse(ModelState));
+            }
+
             var resp = await GetTokenResponse(model);
 
             if (resp.Type != ResponseType.Success)
@@ -41,6 +46,11 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(GetModelStateErrorResponse(ModelState));
+            }
+
             var resp = await RegisterUser(model);
 
             if (resp.Type != ResponseType.Success)

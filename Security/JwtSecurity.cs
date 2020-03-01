@@ -121,7 +121,7 @@ namespace Security
             if (userDto.Id == null)
             {
                 //not expected
-                resp.ErrorCode = ErrorCode.ApplicationExceptionMessage;
+                resp.ErrorCode = ErrorCode.ApplicationException;
                 _logger.LogError(string.Format("New user {0} cannot be registered.", userDto.Email));
 
                 return resp;

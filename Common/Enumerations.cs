@@ -68,13 +68,15 @@
 
     public enum ResponseType
     {
+        InternalError = -3,
+        ValidationError = -2,
         Fail = -1,
         Success = 0,
         Warning = 1,
         Info = 2,
         NoEffect = 3,
         DuplicateRecord = 4,
-        RecordNotFound = 5
+        RecordNotFound = 5,
     }
 
     public enum WebMethodType

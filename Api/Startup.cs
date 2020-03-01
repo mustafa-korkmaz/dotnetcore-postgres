@@ -33,6 +33,10 @@ namespace BoilerplateDotnetCorePostgres
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
+            .ConfigureApiBehaviorOptions(options =>
+            {
+             options.SuppressModelStateInvalidFilter = true; //prevent automatic 400 response
+            })
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver

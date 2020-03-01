@@ -1,21 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace BoilerplateDotnetCorePostgres.Models.User
 {
     public class RegisterModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} field must be max {1} characters.")]
+        [Required(ErrorMessage = ValidationErrorCode.RequiredField)]
+        [StringLength(30, ErrorMessage = ValidationErrorCode.MaxLength)]
+        [Display(Name = "USERNAME")]
         public string Username { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = ValidationErrorCode.RequiredField)]
+        [EmailAddress(ErrorMessage = ValidationErrorCode.EmailNotValid)]
+        [Display(Name = "EMAIL")]
         public string Email { get; set; }
 
-        [StringLength(100, ErrorMessage = "{0} field must be min {2} max {1} characters.", MinimumLength = 4)]
+        [StringLength(100, ErrorMessage = ValidationErrorCode.BetweenLength, MinimumLength = 4)]
+        [Display(Name = "NAME_SURNAME")]
         public string NameSurname { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ValidationErrorCode.RequiredField)]
+        [Display(Name = "PASSWORD")]
         public string Password { get; set; }
     }
 }
