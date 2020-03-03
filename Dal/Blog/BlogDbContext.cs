@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Dal.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 
 namespace Dal.Blog
 {
-    public class BlogDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, ApplicationUserClaim<string>,
-        ApplicationUserRole<string>, ApplicationUserLogin<string>, ApplicationRoleClaim<string>, ApplicationUserToken<string>>
+    public class BlogDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, ApplicationUserClaim<Guid>,
+              ApplicationUserRole<Guid>, ApplicationUserLogin<Guid>, ApplicationRoleClaim<Guid>, ApplicationUserToken<Guid>>
     {
         public BlogDbContext(DbContextOptions options) : base(options)
         {
@@ -29,28 +30,34 @@ namespace Dal.Blog
             #region identity user modifications
 
             modelBuilder.Entity<ApplicationUser>()
-                .Property(p => p.Id)
-                .HasColumnType("varchar(128)");
-
-            modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.ConcurrencyStamp)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(36)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.Email)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.NormalizedEmail)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                .IsRequired();
+
+            modelBuilder.Entity<ApplicationUser>()
+               .Property(p => p.UserName)
+               .HasColumnType("varchar(30)")
+               .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.NormalizedUserName)
-                .HasColumnType("varchar(30)");
+                .HasColumnType("varchar(30)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.PasswordHash)
-                .HasColumnType("varchar(8000)");
+                .HasColumnType("varchar(8000)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.PhoneNumber)
@@ -58,11 +65,8 @@ namespace Dal.Blog
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.SecurityStamp)
-                .HasColumnType("varchar(8000)");
-
-            modelBuilder.Entity<ApplicationUser>()
-                .Property(p => p.UserName)
-                .HasColumnType("varchar(30)");
+                .HasColumnType("varchar(100)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(p => p.NameSurname)
@@ -73,91 +77,86 @@ namespace Dal.Blog
             #region role modifications
 
             modelBuilder.Entity<ApplicationRole>()
-                .Property(p => p.Id)
-                .HasColumnType("varchar(128)");
-
-            modelBuilder.Entity<ApplicationRole>()
                 .Property(p => p.ConcurrencyStamp)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(36)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationRole>()
                 .Property(p => p.Name)
-                .HasColumnType("varchar(20)");
+                .HasColumnType("varchar(20)")
+                .IsRequired();
 
             modelBuilder.Entity<ApplicationRole>()
                 .Property(p => p.NormalizedName)
-                .HasColumnType("varchar(20)");
-
+                .HasColumnType("varchar(20)")
+                .IsRequired();
 
             #endregion role modifications
 
-            #region user role modifications
-
-            modelBuilder.Entity<ApplicationUserRole<string>>()
-                .Property(p => p.UserId)
-                .HasColumnType("varchar(128)");
-
-            modelBuilder.Entity<ApplicationUserRole<string>>()
-                .Property(p => p.RoleId)
-                .HasColumnType("varchar(128)");
-
-
-            #endregion user role modifications
 
             #region user login modifications
 
-            modelBuilder.Entity<ApplicationUserLogin<string>>()
+            modelBuilder.Entity<ApplicationUserLogin<Guid>>()
                 .Property(p => p.LoginProvider)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationUserLogin<string>>()
+            modelBuilder.Entity<ApplicationUserLogin<Guid>>()
                 .Property(p => p.ProviderKey)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(128)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationUserLogin<string>>()
+            modelBuilder.Entity<ApplicationUserLogin<Guid>>()
                 .Property(p => p.ProviderDisplayName)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(100)");
 
 
             #endregion user login modifications
 
             #region user token modifications
 
-            modelBuilder.Entity<ApplicationUserToken<string>>()
+            modelBuilder.Entity<ApplicationUserToken<Guid>>()
                 .Property(p => p.LoginProvider)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationUserToken<string>>()
+            modelBuilder.Entity<ApplicationUserToken<Guid>>()
                 .Property(p => p.Name)
-                .HasColumnType("varchar(128)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationUserToken<string>>()
+            modelBuilder.Entity<ApplicationUserToken<Guid>>()
                 .Property(p => p.Value)
-                .HasColumnType("varchar(500)");
+                .HasColumnType("varchar(500)")
+                  .IsRequired();
 
             #endregion user token modifications
 
             #region user claim modifications
 
-            modelBuilder.Entity<ApplicationUserClaim<string>>()
+            modelBuilder.Entity<ApplicationUserClaim<Guid>>()
                 .Property(p => p.ClaimType)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationUserClaim<string>>()
+            modelBuilder.Entity<ApplicationUserClaim<Guid>>()
                 .Property(p => p.ClaimValue)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
             #endregion user claim modifications
 
             #region role claim modifications
 
-            modelBuilder.Entity<ApplicationRoleClaim<string>>()
+            modelBuilder.Entity<ApplicationRoleClaim<Guid>>()
                 .Property(p => p.ClaimType)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
-            modelBuilder.Entity<ApplicationRoleClaim<string>>()
+            modelBuilder.Entity<ApplicationRoleClaim<Guid>>()
                 .Property(p => p.ClaimValue)
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                  .IsRequired();
 
             #endregion role claim modifications
 
@@ -183,7 +182,7 @@ namespace Dal.Blog
             {
                 var length = property.GetMaxLength();
 
-                property.SetColumnType(length == null ? "varchar(max)" : string.Format("varchar({0})", length));
+                property.SetColumnType(length == null ? "varchar" : string.Format("varchar({0})", length));
             }
 
         }

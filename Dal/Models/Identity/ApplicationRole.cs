@@ -2,7 +2,7 @@
 
 namespace Dal.Models.Identity
 {
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRole : IdentityRole<System.Guid>
     {
     }
 }

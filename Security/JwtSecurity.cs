@@ -104,7 +104,7 @@ namespace Security
 
             var userModel = new Dal.Models.Identity.ApplicationUser
             {
-                Id = string.IsNullOrEmpty(userDto.Id) ? null : userDto.Id,
+                Id = userDto.Id,
                 Email = userDto.Email ?? "",
                 EmailConfirmed = userDto.EmailConfirmed,
                 UserName = userDto.UserName,
@@ -219,11 +219,11 @@ namespace Security
                 claims.Add(roleIdentifierClaim);
             }
 
-            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, user.Id, ClaimValueTypes.String);
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.String);
             var emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.String);
             var phoneClaim = new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? "", ClaimValueTypes.String);
 
-            claims.Add(new Claim("id", user.Id));
+            claims.Add(new Claim("id", user.Id.ToString()));
             claims.Add(new Claim("username", user.UserName));
 
             claims.Add(nameIdentifierClaim);

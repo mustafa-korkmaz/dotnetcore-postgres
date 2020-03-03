@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Dal.Models.Identity
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<System.Guid>
     {
         [MaxLength(100)]
         public string NameSurname { get; set; }

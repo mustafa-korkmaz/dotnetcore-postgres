@@ -101,7 +101,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
                 AccessToken = securityResp.Data,
                 Email = applicationUser.Email,
                 NameSurname = applicationUser.NameSurname,
-                Id = applicationUser.Id
+                Id = applicationUser.Id.ToString()
             };
 
             apiResp.Data = viewModel;
@@ -123,7 +123,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
                 Type = ResponseType.Success,
                 Data = new UserViewModel
                 {
-                    Id = user.Id,
+                    Id = user.Id.ToString(),
                     CreatedAt = user.CreatedAt,
                     Email = user.Email,
                     NameSurname = user.NameSurname,
@@ -146,7 +146,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
 
             var applicationUser = new ApplicationUser
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Email = model.Email,
                 NameSurname = model.NameSurname,
                 UserName = model.Username,
