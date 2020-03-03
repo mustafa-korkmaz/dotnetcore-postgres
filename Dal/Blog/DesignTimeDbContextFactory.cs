@@ -11,7 +11,7 @@ namespace Dal.Blog
         public BlogDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BlogDbContext>();
-            optionsBuilder.UseNpgsql("Server=rajje.db.elephantsql.com;Port=5432;Database=czurcuic;User Id = czurcuic; Password=	JkuUawrR34f9bf_Gqp_7CEVWpRAtfIVT;CommandTimeout=20;");
+            optionsBuilder.UseNpgsql("Server=drona.db.elephantsql.com;Port=5432;Database=tevebsox;User Id = tevebsox; Password=getD8DW32cQ1edBnc9yKh-palbsz3g-y;CommandTimeout=20;");
 
             return new BlogDbContext(optionsBuilder.Options);
         }
