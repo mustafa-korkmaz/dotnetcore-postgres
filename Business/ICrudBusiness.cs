@@ -13,13 +13,13 @@ namespace Business
         /// creates new entity from given dto
         /// </summary>
         /// <param name="dto"></param>
-        void Add(TDto dto);
+        ResponseBase Add(TDto dto);
 
         /// <summary>
         /// creates new entities as bulk insert from given dto list
         /// </summary>
         /// <param name="dtoList"></param>
-        void AddRange(IEnumerable<TDto> dtoList);
+        ResponseBase AddRange(IEnumerable<TDto> dtoList);
 
         /// <summary>
         /// updates given entity and returns affected row count.
@@ -32,13 +32,13 @@ namespace Business
         /// hard deletes entity by given id
         /// </summary>
         /// <param name="id"></param>
-        void Delete(int id);
+        ResponseBase Delete(int id);
 
         /// <summary>
         /// soft deletes entity
         /// </summary>
         /// <param name="id"></param>
-        void SoftDelete(int id);
+        ResponseBase SoftDelete(int id);
 
         /// <summary>
         /// returns dto object by given id

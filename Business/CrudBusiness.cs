@@ -42,7 +42,7 @@ namespace Business
             Mapper = mapper;
         }
 
-        public virtual void Add(TDto dto)
+        public virtual ResponseBase Add(TDto dto)
         {
             var entity = Mapper.Map<TDto, TEntity>(dto);
 
@@ -51,15 +51,25 @@ namespace Business
             Uow.Save();
 
             dto.Id = entity.Id;
+
+            return new ResponseBase
+            {
+                Type = ResponseType.Success
+            };
         }
 
-        public virtual void AddRange(IEnumerable<TDto> dtoList)
+        public virtual ResponseBase AddRange(IEnumerable<TDto> dtoList)
         {
             var entities = Mapper.Map<IEnumerable<TDto>, IEnumerable<TEntity>>(dtoList);
 
             Repository.InsertRange(entities);
 
             Uow.Save();
+
+            return new ResponseBase
+            {
+                Type = ResponseType.Success
+            };
         }
 
         public virtual DataResponse<int> Edit(TDto dto)
@@ -124,7 +134,7 @@ namespace Business
             return businessResp;
         }
 
-        public virtual void Delete(int id)
+        public virtual ResponseBase Delete(int id)
         {
             if (Entity != null && Entity.Id == id)
             {
@@ -140,24 +150,15 @@ namespace Business
             var type = typeof(TEntity);
 
             //log db record deletion as an info
-            Logger.LogInformation(string.Format("'{0}' entity has been hard-deleted.", type.ToString()));
+            Logger.LogInformation($"'{type}' entity has been hard-deleted.");
+
+            return new ResponseBase
+            {
+                Type = ResponseType.Success
+            };
         }
 
-        public virtual void Delete(TEntity entity)
-        {
-            Repository.Delete(entity);
-
-            Uow.Save();
-
-            var type = typeof(TEntity);
-
-            //log db record deletion as an info
-            var args = new TEntity[1];
-            args[0] = entity;
-            Logger.LogInformation(string.Format("'{0}' entity has been deleted.", type.ToString()), args);
-        }
-
-        public virtual void SoftDelete(int id)
+        public virtual ResponseBase SoftDelete(int id)
         {
             var entity = Repository.GetById(id);
 
@@ -165,7 +166,11 @@ namespace Business
 
             if (entity == null)
             {
-                return;
+                return new ResponseBase
+                {
+                    Type = ResponseType.Fail,
+                    ErrorCode = ErrorCode.RecordNotFound
+                };
             }
 
             var type = typeof(TEntity);
@@ -191,9 +196,13 @@ namespace Business
             }
 
             //log db record modification as an info
-            Logger.LogInformation(string.Format("'{0}' entity with ID: {1} has been modified.", type, id));
-        }
+            Logger.LogInformation($"'{type}' entity with ID: {id} has been modified.");
 
+            return new ResponseBase
+            {
+                Type = ResponseType.Success
+            };
+        }
 
         public virtual DataResponse<TDto> Get(int id)
         {
