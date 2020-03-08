@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 namespace Business
 {
-    public interface ICrudBusiness<in TEntity, TDto>
-       where TEntity : EntityBase
+    public interface ICrudBusiness<TDto>
        where TDto : DtoBase
     {
         /// <summary>
@@ -28,12 +27,6 @@ namespace Business
         /// <param name="dto"></param>
         /// <returns>affected row count in db</returns>
         DataResponse<int> Edit(TDto dto);
-
-        /// <summary>
-        /// hard deletes the given entity.
-        /// </summary>
-        /// <param name="entity"></param>
-        void Delete(TEntity entity);
 
         /// <summary>
         /// hard deletes entity by given id

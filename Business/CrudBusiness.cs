@@ -18,7 +18,7 @@ namespace Business
     /// <typeparam name="TEntity">TEntity is db entity.</typeparam>
     /// <typeparam name="TDto">TDto is data transfer object.</typeparam>
     /// <typeparam name="TRepository"></typeparam>
-    public abstract class CrudBusiness<TRepository, TEntity, TDto> : ICrudBusiness<TEntity, TDto>
+    public abstract class CrudBusiness<TRepository, TEntity, TDto> : ICrudBusiness<TDto>
         where TEntity : EntityBase
         where TDto : DtoBase
         where TRepository : IRepository<TEntity>
@@ -27,6 +27,7 @@ namespace Business
         protected readonly TRepository Repository;
         protected readonly IMapper Mapper;
         protected readonly ILogger Logger;
+        protected TEntity Entity;
 
         /// <summary>
         /// to avoid IDOR attacks checks userId of entity and the given dto are the same or not
@@ -125,7 +126,14 @@ namespace Business
 
         public virtual void Delete(int id)
         {
-            Repository.Delete(id);
+            if (Entity != null && Entity.Id == id)
+            {
+                Repository.Delete(Entity);
+            }
+            else
+            {
+                Repository.Delete(id);
+            }
 
             Uow.Save();
 
@@ -194,15 +202,15 @@ namespace Business
                 Type = ResponseType.Fail
             };
 
-            var entity = Repository.GetById(id);
+            Entity = Repository.GetById(id);
 
-            if (entity == null)
+            if (Entity == null)
             {
                 businessResp.ErrorCode = ErrorCode.RecordNotFound;
                 return businessResp;
             }
 
-            var dto = Mapper.Map<TEntity, TDto>(entity);
+            var dto = Mapper.Map<TEntity, TDto>(Entity);
 
             businessResp.Type = ResponseType.Success;
             businessResp.Data = dto;
