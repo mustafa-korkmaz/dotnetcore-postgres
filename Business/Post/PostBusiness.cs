@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Business.Post
 {
-    public class PostBusiness : CrudBusiness<PostRepository, Dal.Models.Post, Dto.Post>, IPostBusiness
+    public class PostBusiness : CrudBusiness<PostRepository, Dal.Entities.Post, Dto.Post>, IPostBusiness
     {
         public PostBusiness(BlogDbContext context, ILogger<PostBusiness> logger, IMapper mapper)
         : base(context, logger, mapper)
@@ -20,7 +20,7 @@ namespace Business.Post
 
             var posts = Repository.SearchPosts(title);
 
-            var dtos = Mapper.Map<IEnumerable<Dal.Models.Post>, IEnumerable<Dto.Post>>(posts);
+            var dtos = Mapper.Map<IEnumerable< Dal.Entities.Post>, IEnumerable<Dto.Post>>(posts);
 
             return dtos;
         }

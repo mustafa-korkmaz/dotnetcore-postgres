@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace Dal.Repositories.Blog
 {
-    public class BlogRepository : PostgreSqlDbRepository<Models.Blog>, IBlogRepository
+    public class BlogRepository : PostgreSqlDbRepository<Entities.Blog>, IBlogRepository
     {
         public BlogRepository(BlogDbContext context) : base(context)
         {
         }
 
-        public IEnumerable<Models.Blog> SearchBlogs(string url)
+        public IEnumerable<Entities.Blog> SearchBlogs(string url)
         {
             var query = Entities.Where(p => p.Url.Contains(url));
 

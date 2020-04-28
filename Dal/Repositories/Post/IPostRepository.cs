@@ -2,8 +2,8 @@
 
 namespace Dal.Repositories.Post
 {
-    public interface IPostRepository : IRepository<Models.Post>
+    public interface IPostRepository : IRepository<Entities.Post>
     {
-        IEnumerable<Models.Post> SearchPosts(string title);
+        IEnumerable<Entities.Post> SearchPosts(string title);
     }
 }

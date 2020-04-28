@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace Dal.Models.Identity
+namespace Dal.Entities.Identity
 {
     public class ApplicationUserLogin<T> : IdentityUserLogin<T> where T : IEquatable<T>
     {

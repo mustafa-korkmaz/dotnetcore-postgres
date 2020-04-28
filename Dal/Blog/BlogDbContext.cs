@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Dal.Models.Identity;
+using Dal.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -16,9 +16,9 @@ namespace Dal.Blog
         {
         }
 
-        public DbSet<Models.Blog> Blogs { get; set; }
+        public DbSet<Entities.Blog> Blogs { get; set; }
 
-        public DbSet<Models.Post> Posts { get; set; }
+        public DbSet<Entities.Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

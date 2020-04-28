@@ -2,8 +2,8 @@
 
 namespace Dal.Repositories.Blog
 {
-    public interface IBlogRepository : IRepository<Models.Blog>
+    public interface IBlogRepository : IRepository<Entities.Blog>
     {
-        IEnumerable<Models.Blog> SearchBlogs(string url);
+        IEnumerable<Entities.Blog> SearchBlogs(string url);
     }
 }

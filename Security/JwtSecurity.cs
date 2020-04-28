@@ -18,11 +18,11 @@ namespace Security
 {
     public class JwtSecurity : ISecurity
     {
-        private readonly UserManager<Dal.Models.Identity.ApplicationUser> _userManager;
+        private readonly UserManager< Dal.Entities.Identity.ApplicationUser> _userManager;
         private readonly ILogger<JwtSecurity> _logger;
         private readonly IMapper _mapper;
 
-        public JwtSecurity(UserManager<Dal.Models.Identity.ApplicationUser> userManager, ILogger<JwtSecurity> logger, IMapper mapper)
+        public JwtSecurity(UserManager< Dal.Entities.Identity.ApplicationUser> userManager, ILogger<JwtSecurity> logger, IMapper mapper)
         {
             _userManager = userManager;
             _logger = logger;
@@ -36,7 +36,7 @@ namespace Security
                 Type = ResponseType.Fail
             };
 
-            Dal.Models.Identity.ApplicationUser user;
+            Dal.Entities.Identity.ApplicationUser user;
 
             if (userDto.UserName.Contains("@")) // login via email
             {
@@ -102,7 +102,7 @@ namespace Security
                 return resp;
             }
 
-            var userModel = new Dal.Models.Identity.ApplicationUser
+            var userModel = new Dal.Entities.Identity.ApplicationUser
             {
                 Id = userDto.Id,
                 Email = userDto.Email ?? "",
@@ -198,7 +198,7 @@ namespace Security
 
             var userEntity = await _userManager.FindByIdAsync(userId);
 
-            var userDto = _mapper.Map<Dal.Models.Identity.ApplicationUser, ApplicationUser>(userEntity);
+            var userDto = _mapper.Map< Dal.Entities.Identity.ApplicationUser, ApplicationUser>(userEntity);
 
             return userDto;
         }

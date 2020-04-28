@@ -18,7 +18,7 @@ namespace Business.Blog
         public BlogBusiness(BlogDbContext context, ILogger<BlogBusiness> logger, IMapper mapper)
         {
             _uow = new UnitOfWork(context);
-            _repository = _uow.Repository<BlogRepository, Dal.Models.Blog>();
+            _repository = _uow.Repository<BlogRepository, Dal.Entities.Blog>();
             _logger = logger;
             _mapper = mapper;
         }
@@ -27,7 +27,7 @@ namespace Business.Blog
         {
             var blogs = _repository.SearchBlogs(url);
 
-            var dtos = _mapper.Map<IEnumerable<Dal.Models.Blog>, IEnumerable<Dto.Blog>>(blogs);
+            var dtos = _mapper.Map<IEnumerable< Dal.Entities.Blog>, IEnumerable<Dto.Blog>>(blogs);
 
             return dtos;
         }
@@ -36,7 +36,7 @@ namespace Business.Blog
         {
             var blog = _repository.GetById(id);
 
-            var dto = _mapper.Map<Dal.Models.Blog, Dto.Blog>(blog);
+            var dto = _mapper.Map< Dal.Entities.Blog, Dto.Blog>(blog);
 
             return dto;
         }
@@ -50,7 +50,7 @@ namespace Business.Blog
         {
             var blogs = _repository.GetAll();
 
-            var dtos = _mapper.Map<IEnumerable<Dal.Models.Blog>, IEnumerable<Dto.Blog>>(blogs);
+            var dtos = _mapper.Map<IEnumerable< Dal.Entities.Blog>, IEnumerable<Dto.Blog>>(blogs);
 
             return dtos;
         }

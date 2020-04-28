@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Dal.Models
+namespace Dal.Entities
 {
     public class Post : EntityBase
     {

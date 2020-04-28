@@ -1,4 +1,4 @@
-﻿namespace Dal.Models
+﻿namespace Dal.Entities
 {
     /// <summary>
     /// base entity abstraction

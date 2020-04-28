@@ -50,8 +50,8 @@ namespace BoilerplateDotnetCorePostgres
             options.UseNpgsql(Configuration.GetConnectionString("BlogContext")));
 
             //Injecting the identity manager
-            services.AddIdentity<Dal.Models.Identity.ApplicationUser,
-                Dal.Models.Identity.ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity< Dal.Entities.Identity.ApplicationUser,
+                Dal.Entities.Identity.ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<Dal.Blog.BlogDbContext>();
 
             // Add functionality to inject IOptions<T>

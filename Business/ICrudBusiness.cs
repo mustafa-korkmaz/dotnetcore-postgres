@@ -1,6 +1,6 @@
 ﻿
 using Common.Response;
-using Dal.Models;
+using Dal.Entities;
 using Dto;
 using System.Collections.Generic;
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Dal.Models;
+using Dal.Entities;
 
 namespace Dal.Repositories
 {

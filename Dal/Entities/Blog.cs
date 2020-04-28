@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Dal.Models
+namespace Dal.Entities
 {
     public class Blog : EntityBase
     {

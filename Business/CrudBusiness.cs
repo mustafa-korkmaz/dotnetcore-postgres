@@ -3,7 +3,7 @@ using System.Reflection;
 using AutoMapper;
 using Common;
 using Common.Response;
-using Dal.Models;
+using Dal.Entities;
 using Dto;
 using System.Linq;
 using Dal.Blog;

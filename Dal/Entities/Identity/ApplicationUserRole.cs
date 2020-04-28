@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace Dal.Models.Identity
+namespace Dal.Entities.Identity
 {
     public class ApplicationUserRole<T> : IdentityUserRole<T> where T : IEquatable<T>
     {
