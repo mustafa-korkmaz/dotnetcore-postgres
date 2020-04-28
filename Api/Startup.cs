@@ -5,6 +5,7 @@ using Business;
 using Business.Blog;
 using Business.Post;
 using Common;
+using Dal.Blog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -45,14 +46,15 @@ namespace BoilerplateDotnetCorePostgres
                 };
             });
 
-            //Injecting the db context
-            services.AddDbContext<Dal.Blog.BlogDbContext>(options =>
+            //Injecting the db context and uow
+            services.AddDbContext<BlogDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("BlogContext")));
+            services.AddTransient<Dal.IUnitOfWork, UnitOfWork>();
 
             //Injecting the identity manager
             services.AddIdentity< Dal.Entities.Identity.ApplicationUser,
                 Dal.Entities.Identity.ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<Dal.Blog.BlogDbContext>();
+                .AddEntityFrameworkStores<BlogDbContext>();
 
             // Add functionality to inject IOptions<T>
             services.AddOptions();
