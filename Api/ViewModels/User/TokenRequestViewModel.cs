@@ -1,9 +1,9 @@
 ﻿using Common;
 using System.ComponentModel.DataAnnotations;
 
-namespace BoilerplateDotnetCorePostgres.Models.User
+namespace BoilerplateDotnetCorePostgres.ViewModels.User
 {
-    public class TokenModel
+    public class TokenRequestViewModel
     {
         [Required(ErrorMessage = ValidationErrorCode.RequiredField)]
         [Display(Name ="EMAIL_OR_USERNAME")]

@@ -1,9 +1,9 @@
 ﻿using Common;
 using System.ComponentModel.DataAnnotations;
 
-namespace BoilerplateDotnetCorePostgres.Models.User
+namespace BoilerplateDotnetCorePostgres.ViewModels.User
 {
-    public class RegisterModel
+    public class RegisterRequestViewModel
     {
         [Required(ErrorMessage = ValidationErrorCode.RequiredField)]
         [StringLength(30, ErrorMessage = ValidationErrorCode.MaxLength)]

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Dal.Repositories.Post;
-using Dal.Blog;
 using Microsoft.Extensions.Logging;
 using Dal;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BoilerplateDotnetCorePostgres.Models.User;
+using BoilerplateDotnetCorePostgres.ViewModels.User;
 using BoilerplateDotnetCorePostgres.ViewModels.User;
 using Common;
 using Common.Response;
@@ -25,7 +25,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
 
         [HttpPost("token")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetToken([FromBody]TokenModel model)
+        public async Task<IActionResult> GetToken([FromBody]TokenRequestViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +44,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody]RegisterModel model)
+        public async Task<IActionResult> Register([FromBody]RegisterRequestViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
             return Ok(resp);
         }
 
-        private async Task<ApiResponse<TokenViewModel>> GetTokenResponse(TokenModel model)
+        private async Task<ApiResponse<TokenViewModel>> GetTokenResponse(TokenRequestViewModel model)
         {
             var apiResp = new ApiResponse<TokenViewModel>
             {
@@ -137,7 +137,7 @@ namespace BoilerplateDotnetCorePostgres.Controllers
         /// creates new user
         /// </summary>
         /// <param name="model"></param>
-        private async Task<ApiResponse> RegisterUser(RegisterModel model)
+        private async Task<ApiResponse> RegisterUser(RegisterRequestViewModel model)
         {
             var apiResp = new ApiResponse
             {
