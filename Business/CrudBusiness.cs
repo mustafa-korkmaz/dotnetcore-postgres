@@ -9,6 +9,7 @@ using System.Linq;
 using Dal.Blog;
 using Dal.Repositories;
 using Microsoft.Extensions.Logging;
+using Dal;
 
 namespace Business
 {
@@ -23,7 +24,7 @@ namespace Business
         where TDto : DtoBase
         where TRepository : IRepository<TEntity>
     {
-        protected readonly UnitOfWork Uow;
+        protected readonly IUnitOfWork Uow;
         protected readonly TRepository Repository;
         protected readonly IMapper Mapper;
         protected readonly ILogger Logger;
@@ -34,9 +35,9 @@ namespace Business
         /// </summary>
         protected bool ValidateEntityOwner;
 
-        protected CrudBusiness(BlogDbContext context, ILogger logger, IMapper mapper)
+        protected CrudBusiness(IUnitOfWork uow, ILogger logger, IMapper mapper)
         {
-            Uow = new UnitOfWork(context);
+            Uow = uow;
             Repository = Uow.Repository<TRepository, TEntity>();
             Logger = logger;
             Mapper = mapper;

@@ -3,13 +3,14 @@ using AutoMapper;
 using Dal.Repositories.Post;
 using Dal.Blog;
 using Microsoft.Extensions.Logging;
+using Dal;
 
 namespace Business.Post
 {
     public class PostBusiness : CrudBusiness<PostRepository, Dal.Entities.Post, Dto.Post>, IPostBusiness
     {
-        public PostBusiness(BlogDbContext context, ILogger<PostBusiness> logger, IMapper mapper)
-        : base(context, logger, mapper)
+        public PostBusiness(IUnitOfWork uow, ILogger<PostBusiness> logger, IMapper mapper)
+        : base(uow, logger, mapper)
         {
         }
 
@@ -20,7 +21,7 @@ namespace Business.Post
 
             var posts = Repository.SearchPosts(title);
 
-            var dtos = Mapper.Map<IEnumerable< Dal.Entities.Post>, IEnumerable<Dto.Post>>(posts);
+            var dtos = Mapper.Map<IEnumerable<Dal.Entities.Post>, IEnumerable<Dto.Post>>(posts);
 
             return dtos;
         }
