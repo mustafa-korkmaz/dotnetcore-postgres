@@ -160,31 +160,35 @@ namespace Dal.Blog
 
             #endregion role claim modifications
 
-            //#region dbo.userLogs
+            #region seed data
 
-            //modelBuilder.Entity<UserLog>()
-            //    .HasIndex(b => b.UserId)
-            //    .HasName("IX_UserId");
+            modelBuilder.Entity<Entities.Blog>().HasData(
 
-            //#endregion #dbo.userLogs
+            CreateBlog(1, "https://medium.com"),
+            CreateBlog(2, "https://twitter.com"));
 
-            //avoid nvarchar (use varchar)
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                   .Where(t => t.ClrType != typeof(ApplicationUser)
-                    && t.ClrType != typeof(ApplicationUserLogin<string>)
-                    && t.ClrType != typeof(ApplicationUserRole<string>)
-                    && t.ClrType != typeof(ApplicationUserClaim<string>)
-                    && t.ClrType != typeof(ApplicationRoleClaim<string>)
-                    && t.ClrType != typeof(ApplicationUserToken<string>)
-                    && t.ClrType != typeof(ApplicationRole))
-                   .SelectMany(t => t.GetProperties())
-                   .Where(p => p.ClrType == typeof(string)))
+            Entities.Blog CreateBlog(int id, string url)
             {
-                var length = property.GetMaxLength();
-
-                property.SetColumnType(length == null ? "varchar" : string.Format("varchar({0})", length));
+                return new Entities.Blog
+                {
+                    Id = id,
+                    Url = url
+                };
             }
 
+            modelBuilder.Entity<Entities.Post>().HasData(
+            new Entities.Post() { BlogId = 1, Id = 1, Title = "First post", Content = "Test 1" });
+
+            modelBuilder.Entity<Entities.Post>().HasData(
+            new Entities.Post() { BlogId = 1, Id = 2, Title = "Second  post", Content = "Test 2" });
+
+            modelBuilder.Entity<Entities.Post>().HasData(
+            new Entities.Post() { BlogId = 2, Id = 3, Title = "3rd  post", Content = "Test 3", CreatedAt = DateTime.Now });
+
+            modelBuilder.Entity<Entities.Post>().HasData(
+            new Entities.Post() { BlogId = 1, Id = 4, Title = "4th  post", Content = "Test 4" });
+          
+            #endregion seed data
         }
 
         public override int SaveChanges()
