@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Dal.Entities;
 using Dal.Repositories;
+using Dal.Blog;
 
-namespace Dal.Blog
+namespace Dal
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -53,15 +54,9 @@ namespace Dal.Blog
             _disposed = true;
         }
 
-        /// <summary>
-        /// Returns entity repository inherited from  IRepository
-        /// </summary>
-        /// <typeparam name="TRepository"></typeparam>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
         public TRepository Repository<TRepository, TEntity>()
-            where TEntity : EntityBase
-            where TRepository : IRepository<TEntity>
+      where TEntity : EntityBase
+      where TRepository : IRepository<TEntity>
         {
             if (_repositories == null)
             {
@@ -85,11 +80,6 @@ namespace Dal.Blog
             return (TRepository)_repositories[type];
         }
 
-        /// <summary>
-        /// Use only for entity object free repositories like IdentityUser's repository
-        /// </summary>
-        /// <typeparam name="TRepository"></typeparam>
-        /// <returns></returns>
         public TRepository Repository<TRepository>()
         {
             if (_repositories == null)

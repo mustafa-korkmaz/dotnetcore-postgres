@@ -5,6 +5,7 @@ using Business;
 using Business.Blog;
 using Business.Post;
 using Common;
+using Dal;
 using Dal.Blog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -49,7 +50,7 @@ namespace BoilerplateDotnetCorePostgres
             //Injecting the db context and uow
             services.AddDbContext<BlogDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("BlogContext")));
-            services.AddTransient<Dal.IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             //Injecting the identity manager
             services.AddIdentity< Dal.Entities.Identity.ApplicationUser,

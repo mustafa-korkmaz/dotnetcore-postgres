@@ -1,6 +1,5 @@
 ﻿
 using Common.Response;
-using Dal.Entities;
 using Dto;
 using System.Collections.Generic;
 

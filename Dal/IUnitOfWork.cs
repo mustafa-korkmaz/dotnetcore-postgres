@@ -1,6 +1,6 @@
-﻿
-using Dal.Entities;
+﻿using Dal.Entities;
 using Dal.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 
 namespace Dal
@@ -25,5 +25,7 @@ namespace Dal
         /// <typeparam name="TRepository"></typeparam>
         /// <returns></returns>
         TRepository Repository<TRepository>();
+
+        IDbContextTransaction BeginTransaction();
     }
 }
