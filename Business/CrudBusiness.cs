@@ -9,6 +9,7 @@ using System.Linq;
 using Dal.Repositories;
 using Microsoft.Extensions.Logging;
 using Dal;
+using System;
 
 namespace Business
 {
@@ -23,14 +24,18 @@ namespace Business
         where TDto : DtoBase
         where TRepository : IRepository<TEntity>
     {
+        /// <summary>
+        /// when we need to validate entity owner we will need this owner UserId property
+        /// </summary>
+        public Guid OwnerId { get; set; }
+
         protected readonly IUnitOfWork Uow;
         protected readonly TRepository Repository;
         protected readonly IMapper Mapper;
         protected readonly ILogger Logger;
-        protected TEntity Entity;
 
         /// <summary>
-        /// to avoid IDOR attacks checks userId of entity and the given dto are the same or not
+        /// to avoid IDOR attacks checks whether userId of entity and the ApplicationUser.Id are the same
         /// </summary>
         protected bool ValidateEntityOwner;
 
@@ -87,43 +92,35 @@ namespace Business
                 return businessResp;
             }
 
-            var type = typeof(TEntity);
-
-            var entityProperties = type.GetProperties();
-
             if (ValidateEntityOwner)
             {
                 //client wants to check for an IDOR attack
-                var userIdPropExists = entityProperties.Any(p => p.Name == "UserId");
-
-                if (userIdPropExists)
+                if (!IsEntityOwnerValid(entity))
                 {
-                    PropertyInfo entityProperty = typeof(TEntity).GetProperty("UserId");
-                    PropertyInfo dtoProperty = typeof(TDto).GetProperty("UserId");
-
-                    var entityUserId = entityProperty.GetValue(entity).ToString();
-                    var dtoUserId = dtoProperty.GetValue(dto).ToString();
-
-                    if (!entityUserId.Equals(dtoUserId))
-                    {
-                        businessResp.ErrorCode = ErrorCode.NotAuthorized;
-                        return businessResp;
-                    }
+                    businessResp.ErrorCode = ErrorCode.NotAuthorized;
+                    return businessResp;
                 }
             }
+
+            var type = typeof(TEntity);
+            var entityProperties = type.GetProperties();
 
             foreach (PropertyInfo entityProperty in entityProperties)
             {
-                //Only modify settable properties. Do not change CreatedAt property.
-                if (entityProperty.CanWrite && entityProperty.Name != "CreatedAt")
+                //Get CreatedAt property value from entity.
+                if (entityProperty.Name == "CreatedAt")
                 {
                     PropertyInfo dtoProperty = typeof(TDto).GetProperty(entityProperty.Name); //POCO obj must have same prop as model
 
-                    var value = dtoProperty.GetValue(dto); //get new value of entity from dto object
+                    var value = entityProperty.GetValue(entity); //get value of entity
 
-                    entityProperty.SetValue(entity, value, null); //set new value of entity
+                    dtoProperty.SetValue(dto, value, null); //set dto.CreatedAt as entity.CreatedAt
+
+                    break;
                 }
             }
+
+            entity = Mapper.Map<TDto, TEntity>(dto);
 
             Repository.Update(entity);
 
@@ -136,14 +133,30 @@ namespace Business
 
         public virtual ResponseBase Delete(int id)
         {
-            if (Entity != null && Entity.Id == id)
+            var resp = new ResponseBase
             {
-                Repository.Delete(Entity);
-            }
-            else
+                Type = ResponseType.Fail
+            };
+
+            var entity = Repository.GetById(id);
+
+            if (entity == null)
             {
-                Repository.Delete(id);
+                resp.ErrorCode = ErrorCode.RecordNotFound;
+                return resp;
             }
+
+            if (ValidateEntityOwner)
+            {
+                //client wants to check for an IDOR attack
+                if (!IsEntityOwnerValid(entity))
+                {
+                    resp.ErrorCode = ErrorCode.NotAuthorized;
+                    return resp;
+                }
+            }
+
+            Repository.Delete(entity);
 
             Uow.Save();
 
@@ -152,25 +165,36 @@ namespace Business
             //log db record deletion as an info
             Logger.LogInformation($"'{type}' entity has been hard-deleted.");
 
-            return new ResponseBase
-            {
-                Type = ResponseType.Success
-            };
+            resp.Type = ResponseType.Success;
+
+            return resp;
         }
 
         public virtual ResponseBase SoftDelete(int id)
         {
+            var resp = new ResponseBase
+            {
+                Type = ResponseType.Fail
+            };
+
             var entity = Repository.GetById(id);
 
             bool updated = false;
 
             if (entity == null)
             {
-                return new ResponseBase
+                resp.ErrorCode = ErrorCode.RecordNotFound;
+                return resp;
+            }
+
+            if (ValidateEntityOwner)
+            {
+                //client wants to check for an IDOR attack
+                if (!IsEntityOwnerValid(entity))
                 {
-                    Type = ResponseType.Fail,
-                    ErrorCode = ErrorCode.RecordNotFound
-                };
+                    resp.ErrorCode = ErrorCode.NotAuthorized;
+                    return resp;
+                }
             }
 
             var type = typeof(TEntity);
@@ -211,15 +235,15 @@ namespace Business
                 Type = ResponseType.Fail
             };
 
-            Entity = Repository.GetById(id);
+            var entity = Repository.GetById(id);
 
-            if (Entity == null)
+            if (entity == null)
             {
                 businessResp.ErrorCode = ErrorCode.RecordNotFound;
                 return businessResp;
             }
 
-            var dto = Mapper.Map<TEntity, TDto>(Entity);
+            var dto = Mapper.Map<TEntity, TDto>(entity);
 
             businessResp.Type = ResponseType.Success;
             businessResp.Data = dto;
@@ -248,6 +272,31 @@ namespace Business
             businessResp.Data = dtos;
 
             return businessResp;
+        }
+
+        protected virtual bool IsEntityOwnerValid(TEntity entity)
+        {
+            if (OwnerId == Guid.Empty)
+            {
+                throw new Exception("OwnerId cannot be empty");
+            }
+
+            var type = typeof(TEntity);
+
+            var entityProperties = type.GetProperties();
+
+            var userIdPropExists = entityProperties.Any(p => p.Name == "UserId");
+
+            if (userIdPropExists)
+            {
+                PropertyInfo entityProperty = typeof(TEntity).GetProperty("UserId");
+
+                var entityUserId = (Guid)entityProperty.GetValue(entity);
+
+                return entityUserId.Equals(OwnerId);
+            }
+
+            return false;
         }
     }
 }
