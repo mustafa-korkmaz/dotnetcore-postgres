@@ -19,9 +19,10 @@ namespace Business
     /// <typeparam name="TEntity">TEntity is db entity.</typeparam>
     /// <typeparam name="TDto">TDto is data transfer object.</typeparam>
     /// <typeparam name="TRepository"></typeparam>
-    public abstract class CrudBusiness<TRepository, TEntity, TDto> : ICrudBusiness<TDto>
-        where TEntity : EntityBase
-        where TDto : DtoBase
+    /// <typeparam name="TKey"></typeparam>
+    public abstract class CrudBusiness<TRepository, TEntity, TDto, TKey> : ICrudBusiness<TDto, TKey>
+        where TEntity : class, IEntity<TKey>
+        where TDto : IDto<TKey>
         where TRepository : IRepository<TEntity>
     {
         /// <summary>
@@ -130,8 +131,8 @@ namespace Business
             businessResp.Type = ResponseType.Success;
             return businessResp;
         }
-
-        public virtual ResponseBase Delete(int id)
+     
+        public virtual ResponseBase Delete(TKey id)
         {
             var resp = new ResponseBase
             {
@@ -170,7 +171,7 @@ namespace Business
             return resp;
         }
 
-        public virtual ResponseBase SoftDelete(int id)
+        public virtual ResponseBase SoftDelete(TKey id)
         {
             var resp = new ResponseBase
             {
@@ -228,7 +229,7 @@ namespace Business
             };
         }
 
-        public virtual DataResponse<TDto> Get(int id)
+        public virtual DataResponse<TDto> Get(TKey id)
         {
             var businessResp = new DataResponse<TDto>
             {

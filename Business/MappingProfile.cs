@@ -12,8 +12,8 @@ namespace Business
             CreateMap< Dal.Entities.EntityBase, Dto.DtoBase>();
 
 
-            CreateMap< Dal.Entities.Identity.ApplicationUser, Dto.User.ApplicationUser>();
-            CreateMap<Dto.User.ApplicationUser, Dal.Entities.Identity.ApplicationUser>();
+            CreateMap< Dal.Entities.Identity.ApplicationUser, Dto.ApplicationUser>();
+            CreateMap<Dto.ApplicationUser, Dal.Entities.Identity.ApplicationUser>();
 
             CreateMap<Dto.Post, Dal.Entities.Post>();
             CreateMap< Dal.Entities.Post, Dto.Post>();
@@ -21,8 +21,6 @@ namespace Business
 
             CreateMap<Dto.Blog, Dal.Entities.Blog>();
             CreateMap< Dal.Entities.Blog, Dto.Blog>();
-            //CreateMap<IEnumerable<Dto.Blog>, IEnumerable< Dal.Entities.Blog>>();
-            //CreateMap<IEnumerable< Dal.Entities.Blog>, IEnumerable<Dto.Blog>>();
         }
     }
 }

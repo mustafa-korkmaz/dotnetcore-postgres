@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace Business
 {
-    public interface ICrudBusiness<TDto>
-        where TDto : DtoBase
+    public interface ICrudBusiness<TDto, in TKey>
+        where TDto : IDto<TKey>
     {
         /// <summary>
         /// Indicates the owner of an entity. i.e ApplicationUser.Id
@@ -37,19 +37,19 @@ namespace Business
         /// hard deletes entity by given id
         /// </summary>
         /// <param name="id"></param>
-        ResponseBase Delete(int id);
+        ResponseBase Delete(TKey id);
 
         /// <summary>
         /// soft deletes entity
         /// </summary>
         /// <param name="id"></param>
-        ResponseBase SoftDelete(int id);
+        ResponseBase SoftDelete(TKey id);
 
         /// <summary>
         /// returns dto object by given id
         /// </summary>
         /// <param name="id"></param>
-        DataResponse<TDto> Get(int id);
+        DataResponse<TDto> Get(TKey id);
 
         /// <summary>
         /// returns all dto objects

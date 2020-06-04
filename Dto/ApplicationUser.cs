@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Dto.User
+namespace Dto
 {
-    public class ApplicationUser
+    public class ApplicationUser : IDto<Guid>
     {
         public Guid Id { get; set; }
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Dal.Repositories.Blog
 {
-    public class BlogRepository : PostgreSqlDbRepository<Entities.Blog>, IBlogRepository
+    public class BlogRepository : PostgreSqlDbRepository<Entities.Blog, int>, IBlogRepository
     {
         public BlogRepository(BlogDbContext context) : base(context)
         {

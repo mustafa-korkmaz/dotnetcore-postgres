@@ -6,7 +6,7 @@ using Dal;
 
 namespace Business.Post
 {
-    public class PostBusiness : CrudBusiness<PostRepository, Dal.Entities.Post, Dto.Post>, IPostBusiness
+    public class PostBusiness : CrudBusiness<PostRepository, Dal.Entities.Post, Dto.Post, int>, IPostBusiness
     {
         public PostBusiness(IUnitOfWork uow, ILogger<PostBusiness> logger, IMapper mapper)
         : base(uow, logger, mapper)

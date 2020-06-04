@@ -55,7 +55,7 @@ namespace Dal
         }
 
         public TRepository Repository<TRepository, TEntity>()
-      where TEntity : EntityBase
+      where TEntity : class
       where TRepository : IRepository<TEntity>
         {
             if (_repositories == null)

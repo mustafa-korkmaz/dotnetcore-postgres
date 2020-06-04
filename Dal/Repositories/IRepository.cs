@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using Dal.Entities;
 
 namespace Dal.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : EntityBase
+    public interface IRepository<TEntity> where TEntity : class
     {
         //IQueryable<TEntity> RawSql(string sql);
 
         TEntity GetById(object id);
-        IEnumerable<TEntity> GetAll();
+        IReadOnlyCollection<TEntity> GetAll();
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);

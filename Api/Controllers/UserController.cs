@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BoilerplateDotnetCorePostgres.ViewModels.User;
-using BoilerplateDotnetCorePostgres.ViewModels.User;
 using Common;
 using Common.Response;
-using Dto.User;
+using Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;

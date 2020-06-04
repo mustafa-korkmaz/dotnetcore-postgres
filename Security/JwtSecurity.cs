@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using AutoMapper;
-using ApplicationUser = Dto.User.ApplicationUser;
+using ApplicationUser = Dto.ApplicationUser;
 using Microsoft.Extensions.Logging;
 
 namespace Security

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using Common.Response;
-using Dto.User;
+using Dto;
 using System.Threading.Tasks;
 
 namespace Security
@@ -27,6 +27,7 @@ namespace Security
         /// resets user's password
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
         Task<ResponseBase> ResetPassword(string userId, string password);
 
